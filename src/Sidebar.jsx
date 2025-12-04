@@ -11,7 +11,8 @@ function Sidebar() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getAllThreads = async () => {
         try {
-            const response = await fetch("http://localhost:8880/api/thread");
+            // eslint-disable-next-line no-undef
+            const response = await fetch(`${API_BASE_URL}/api/thread`);
             const res = await response.json();
             const filteredData = res.map(thread => ({threadId: thread.threadId, title: thread.title}));
             //console.log(filteredData);
