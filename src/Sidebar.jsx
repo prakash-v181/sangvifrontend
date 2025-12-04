@@ -8,6 +8,10 @@ import {v1 as uuidv1} from "uuid";
 function Sidebar() {
     const {allThreads, setAllThreads, currThreadId, setNewChat, setPrompt, setReply, setCurrThreadId, setPrevChats} = useContext(MyContext);
 
+
+
+    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getAllThreads = async () => {
         try {
@@ -21,6 +25,16 @@ function Sidebar() {
             console.log(err);
         }
     };
+
+
+
+    const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8880";
+
+const Sidebar = () => {
+  // ...
+}
+
 
     useEffect(() => {
         getAllThreads();
@@ -72,6 +86,7 @@ function Sidebar() {
         <section className="sidebar">
             <button onClick={createNewChat}>
                 <img src="src/assets/blacklogo.png" alt="gpt logo" className="logo"></img>
+                
                 <span><i className="fa-solid fa-pen-to-square"></i></span>
             </button>
 
