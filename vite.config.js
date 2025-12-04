@@ -1,10 +1,9 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // eslint-disable-next-line no-undef
-  base: process.env.VITE_BASE_PATH || "/https://your-backend.onrender.com",
-})
+  // IMPORTANT: no "base" with backend url here
+  // If you want, you can remove this whole comment block. :)
+});
