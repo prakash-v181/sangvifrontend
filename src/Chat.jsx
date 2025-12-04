@@ -1,43 +1,47 @@
 import React, { useState } from 'react';
 
+// 1. Define backend URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8880";
+
 const Chat = () => {
-    const [input, setInput] = useState("");
-    const [messages, setMessages] = useState([]);
-    const [loading, setLoading] = useState(false);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    const sendMessage = async () => {
-        if (!input) return;
+  const sendMessage = async () => {
+    if (!input) return;
 
-        // 1. Add user message to UI immediately
-        const userMessage = { sender: "user", text: input };
-        setMessages((prev) => [...prev, userMessage]);
-        setLoading(true);
+    const userMessage = { sender: "user", text: input };
+    setMessages(prev => [...prev, userMessage]);
+    setLoading(true);
+
+    try {
+      // 2. Correct backend URL usage
+      const response = await fetch(`${API_BASE_URL}/api/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input }),
+      });
+
+      const data = await response.json();
+
+      const botMessage = { sender: "gemini", text: data.reply };
+      setMessages(prev => [...prev, botMessage]);
+
+    } catch (error) {
+      console.error("Error:", error);
+      setMessages(prev => [...prev, { sender: "system", text: "Error connecting to server" }]);
+    }
+
+    setLoading(false);
+  };
+    
 
 
-        try {
-            // 2. Send to YOUR backend (not OpenAI directly)
-            const response = await fetch("http://localhost:8880/api/chat", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ message: input }),
-            });
+    
 
-            const data = await response.json();
 
-            // 3. Add AI response to UI
-            const botMessage = { sender: "gemini", text: data.reply };
-            setMessages((prev) => [...prev, botMessage]);
 
-        } catch (error) {
-            console.error("Error:", error);
-            setMessages((prev) => [...prev, { sender: "system", text: "Error connecting to server" }]);
-        }
-
-        setLoading(false);
-        setInput("");
-    };
     
 
     return (
