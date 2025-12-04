@@ -86,7 +86,7 @@ const Sidebar = () => {
         <section className="sidebar">
             <button onClick={createNewChat}>
 
-                <img src="/blacklogo.png" alt="logo" className="logo" />
+                <img src="./assets/blacklogo.png" alt="logo" className="logo" />
 
                 
                 
